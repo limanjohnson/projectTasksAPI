@@ -7,5 +7,6 @@ const db = {};
 db.mongoose = mongoose;
 db.url = dbConfig.url;
 db.projects = require('./projects')(mongoose);
+db.tasks = require('./tasks')(mongoose);
 
 module.exports = db;

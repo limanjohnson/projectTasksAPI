@@ -94,7 +94,7 @@ exports.updateProject = (req, res) => {
         return res.status(400).send({ message: 'Update data cannot be empty!' });
     }
 
-    // Validate the project ID (if using MongoDB ObjectIDs)
+    // Validate the project ID
     const mongoose = require('mongoose');
     if (!mongoose.Types.ObjectId.isValid(project_id)) {
         return res.status(400).send({ message: 'Invalid project ID format!' });
@@ -120,3 +120,31 @@ exports.updateProject = (req, res) => {
             res.status(500).send({ message: 'Error updating project with id=' + project_id });
         });
 };
+
+exports.deleteProject = async (req, res ) => {
+    // #swagger.tags=["Projects"]
+    const project_id = req.header('project_id');
+    if (!project_id) {
+        return res.status(400).send({ message: 'You need to include a project id'})
+    }
+
+    const mongoose = require('mongoose');
+    if (!mongoose.Types.ObjectId.isValid(project_id)) {
+        return res.status(400).send({ message: 'Invalid project ID'});
+    }
+
+    try {
+        // find and delete the project by ID
+        const result = await Project.findByIdAndDelete(project_id);
+
+        if (!result) {
+            return res.status(404).send({ message: 'No project found with the project id: ' + project_id})
+        }
+
+        // Successfully deleted the project
+        res.status(200).send({ message: 'Project deleted successfully!'})
+    } catch (err) {
+        console.error(`Error deleting project: ${err.message}`);
+        res.status(500).send({ message: 'Error occurred while trying to delete the project'})
+    }
+}
