@@ -1,5 +1,6 @@
 const db = require('../models');
 const Task = db.tasks;
+const mongoose = require('mongoose');
 
 // create a task
 exports.create = async (req, res) => {
@@ -91,17 +92,35 @@ exports.getSingleTask = (req, res) => {
             });
 }
 
-// find tasks by projects
-exports.findByProject = (req, res) => {
-    // #swagger.tags=["Tasks"]
-    const project_id = req.params.project_id;
-
-    Task.find({ project_id: project_id})
-        .then(data => res.send(data))
-        .catch(err => res.status(500).send({
-            message: err.message || "An error occurred while retrieving tasks."
-        }));
-};
+// Get tasks by project
+// exports.findByProject = (req, res) => {
+//
+//     const project_id = req.params.project_id;
+//
+//     // Debugging log for received parameter
+//     console.log(`findByProject called with project_id: ${project_id}`);
+//
+//     // Validate the project ID (adjust based on how it's stored in the database)
+//     if (!mongoose.Types.ObjectId.isValid(project_id)) {
+//         return res.status(400).send({ message: "Invalid project ID format!" });
+//     }
+//
+//     // Adjust query if project_id is stored as ObjectId or string
+//     Task.find({ project_id: mongoose.Types.ObjectId(project_id) }) // Modify this casting as needed
+//         .then(data => {
+//             console.log("Tasks found:", data);
+//             if (!data || data.length === 0) {
+//                 return res.status(404).send({ message: "No tasks found for this project." });
+//             }
+//             res.send(data);
+//         })
+//         .catch(err => {
+//             console.error(`Error retrieving tasks for project_id=${project_id}:`, err.message);
+//             res.status(500).send({
+//                 message: err.message || "An error occurred while retrieving tasks."
+//             });
+//         });
+// };
 
 // update an existing task
 exports.update = async (req, res) => {
