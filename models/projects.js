@@ -1,7 +1,6 @@
 module.exports = (mongoose) => {
     const Project = mongoose.model('project',
         mongoose.Schema({
-            project_id: Number,
             project_name: String,
             project_description: String,
             project_priority: { type: String, enum: ['low', 'medium', 'high'], default: 'medium' },
