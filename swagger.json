@@ -5,7 +5,7 @@
     "description": "Create Swagger Documentation",
     "version": "1.0.0"
   },
-  "host": "https://projecttasksapi.onrender.com",
+  "host": "projecttasksapi.onrender.com",
   "basePath": "/",
   "schemes": [
     "http",
