@@ -7,7 +7,7 @@ const doc = {
         description: 'Create Swagger Documentation',
         version: '1.0.0'
     },
-    host: 'localhost:3000',
+    host: process.env.HOST ||'localhost:3000',
     schemes: ['http', 'https']
 }
 
